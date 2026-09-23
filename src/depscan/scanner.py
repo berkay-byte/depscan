@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import re
 import subprocess
+import warnings
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
@@ -462,7 +463,10 @@ class MultiScanner:
                     if resolved in seen:
                         continue
                     seen.add(resolved)
-                    deps.extend(self.scan_file(str(path)))
+                    try:
+                        deps.extend(self.scan_file(str(path)))
+                    except OSError as exc:
+                        warnings.warn(f"Skipping unreadable dependency file {path}: {exc}", RuntimeWarning)
 
         return deps
 

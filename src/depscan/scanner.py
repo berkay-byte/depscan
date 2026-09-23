@@ -215,20 +215,21 @@ class DependencyParser:
         deps = []
         for line in content.splitlines():
             line = line.strip()
+            line = line.split(";", 1)[0].strip()
             if not line or line.startswith("#"):
                 continue
             if "==" in line:
                 name, _, version = line.partition("==")
                 deps.append(Dependency(
                     name=name.strip(),
-                    version=version.split(";", 1)[0].strip(),
+                    version=version.strip(),
                     ecosystem="pypi",
                 ))
             elif ">=" in line:
                 name, _, version = line.partition(">=")
                 deps.append(Dependency(
                     name=name.strip(),
-                    version=version.split(";", 1)[0].strip(),
+                    version=version.strip(),
                     ecosystem="pypi",
                 ))
         return deps

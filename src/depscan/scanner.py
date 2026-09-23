@@ -221,14 +221,14 @@ class DependencyParser:
                 name, _, version = line.partition("==")
                 deps.append(Dependency(
                     name=name.strip(),
-                    version=version.strip(),
+                    version=version.split(";", 1)[0].strip(),
                     ecosystem="pypi",
                 ))
             elif ">=" in line:
                 name, _, version = line.partition(">=")
                 deps.append(Dependency(
                     name=name.strip(),
-                    version=version.strip(),
+                    version=version.split(";", 1)[0].strip(),
                     ecosystem="pypi",
                 ))
         return deps
